@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulador de Capacidade - PLPT</title>
+<title>Simulador PLPT</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -446,7 +446,7 @@ function renderManual() {
         <div class="param-chips">
           ${chip("Distribuidora",  row["Distribuidora"])}
           ${chip("Modelo",         row["Modelo Equipe"])}
-          ${chip("Produtividade",  row["Produt."]+"%")}
+          ${chip("Produtividade",  (row["Produt."]<=1?row["Produt."]*100:row["Produt."]).toFixed(1)+"%")}
           ${chip("km/Ano",         fmtFloat(km))}
           ${chip("Capacidade",     fmtBRL(total))}
         </div>
@@ -482,7 +482,7 @@ function renderTable(dados, container) {
       <td style="font-weight:500">${desc}</td>
       <td class="mono">${row["Distribuidora"]||"—"}</td>
       <td class="mono">${row["Modelo Equipe"]||"CONVENCIONAL"}</td>
-      <td class="mono right">${row["Produt."]}%</td>
+      <td class="mono right">${(row["Produt."]<=1?row["Produt."]*100:row["Produt."]).toFixed(1)}%</td>
       ${MESES.map(m => { const n=parseNum(row[m]); return `<td class="month">${n>0?n:"<span style='color:var(--border)'>—</span>"}</td>`; }).join("")}
       <td class="mono right">${fmtFloat(km)}</td>
       <td class="${total>0?"cap-ok":"cap-no"}">${fmtBRL(total)}</td>
